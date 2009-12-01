@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Run as: perl -CI place2yaml.pl < place.osm 
+# Run as: perl -CI place2yaml.pl < place.osm > place.yml
 use Modern::Perl;
 use YAML::Syck 'Dump';
 
@@ -14,10 +14,10 @@ for my $node (@nodes) {
     my ($lon) = $node =~ m[lon='(.*?)'];
     my ($name) = $node =~ m[<tag k='name' v='(.*?)'/>];
 
-    $place{$name} = {
-        lat => $lat,
-        lon => $lon,
-    } if $name;
+    $place{$name} = [
+        $lat,
+        $lon,
+    ] if $name;
 }
 
 say Dump(\%place);
